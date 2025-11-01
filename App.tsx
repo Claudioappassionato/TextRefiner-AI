@@ -35,7 +35,11 @@ const App: React.FC = () => {
       setOutput(result);
     } catch (e) {
       console.error(e);
-      setError('An error occurred while refining the text. Please check the console for details.');
+      if (e instanceof Error) {
+        setError(e.message);
+      } else {
+        setError('An unknown error occurred. Please check the console for details.');
+      }
     } finally {
       setIsLoading(false);
     }

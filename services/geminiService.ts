@@ -1,14 +1,6 @@
 import { GoogleGenAI, Type } from "@google/genai";
 import type { Options, RefinedTextResponse, ChartData } from '../types';
 
-const API_KEY = process.env.API_KEY;
-
-if (!API_KEY) {
-  throw new Error("API_KEY environment variable not set");
-}
-
-const ai = new GoogleGenAI({ apiKey: API_KEY });
-
 const responseSchema = {
     type: Type.OBJECT,
     properties: {
@@ -58,6 +50,14 @@ const responseSchema = {
 
 
 export const refineText = async (text: string, options: Options): Promise<RefinedTextResponse> => {
+    const API_KEY = process.env.API_KEY;
+
+    if (!API_KEY) {
+      throw new Error("API_KEY environment variable not set. Please ensure it is configured correctly.");
+    }
+
+    const ai = new GoogleGenAI({ apiKey: API_KEY });
+
     let instructions = `You are an expert editor and fact-checker named TextRefiner AI. Your primary goal is to return a refined version of the user's text according to their specified options.
 
 User Text:
