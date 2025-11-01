@@ -1,3 +1,4 @@
+
 import { GoogleGenAI, Type } from "@google/genai";
 import type { Options, RefinedTextResponse, ChartData } from '../types';
 
@@ -50,10 +51,11 @@ const responseSchema = {
 
 
 export const refineText = async (text: string, options: Options): Promise<RefinedTextResponse> => {
-    const API_KEY = process.env.API_KEY;
+    // The user was instructed to set GEMINI_API_KEY, so we should use that.
+    const API_KEY = process.env.GEMINI_API_KEY;
 
     if (!API_KEY) {
-      throw new Error("API_KEY environment variable not set. Please ensure it is configured correctly.");
+      throw new Error("GEMINI_API_KEY environment variable not set. Please ensure it is configured correctly in your .env.local file.");
     }
 
     const ai = new GoogleGenAI({ apiKey: API_KEY });
